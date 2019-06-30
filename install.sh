@@ -10,7 +10,7 @@ source ./check_distribution.sh
 # Config files
 files=(vimrc zshrc tmux.conf tmux.conf.local)
 # Needed softwares
-softwares=(git zsh vim tmux curl exuberant-ctags ack-grep autojump)
+softwares=(git zsh vim tmux curl python-pip exuberant-ctags ack-grep autojump)
 echo "Your distribution is $distribution $distribution_version"
 
 function initial() {
