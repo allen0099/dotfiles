@@ -10,7 +10,7 @@ source ./check_distribution.sh
 # Config files
 files=(vimrc zshrc tmux.conf tmux.conf.local)
 # Needed softwares
-softwares=(git zsh vim tmux curl exuberant-ctags ack-grep)
+softwares=(git zsh vim tmux curl exuberant-ctags ack-grep autojump)
 echo "Your distribution is $distribution $distribution_version"
 
 function initial() {
@@ -124,6 +124,7 @@ sed -i "26s:\$HOME:$home_directory:" zshrc
 # Unknown reason rc file replaced by other
 rm $home_directory/.zshrc
 mv $home_directory/.zshrc.pre-oh-my-zsh .zshrc
+mv .zshrc ~/
 
 # Switch to zsh
 echo "Change default shell to zsh"
@@ -132,3 +133,6 @@ chsh -s /bin/zsh $current_user
 # Change owner in dotfiles back to user
 echo "Change owner"
 chown -R $current_user:$current_user $SCRIPTPATH
+chown -R $current_user:$current_user ~/.vim
+chown -R $current_user:$current_user ~/.viminfo
+chown -R $current_user:$current_user ~/.oh-my-zsh
