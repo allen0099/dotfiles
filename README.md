@@ -8,6 +8,7 @@ allen0099's dotfile installer
 
 ```
 git clone --recursive https://github.com/allen0099/dotfiles
+chmod +x dotfiles/install.sh
 cd dotfiles && ./install.sh
 ```
 
