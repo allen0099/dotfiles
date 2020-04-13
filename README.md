@@ -6,9 +6,8 @@ allen0099's dotfile installer
 
 ## Usage
 
-```
-git clone --recursive https://github.com/allen0099/dotfiles
-chmod +x dotfiles/install.sh
+```shell script
+git clone https://github.com/allen0099/dotfiles
 cd dotfiles && ./install.sh
 ```
 
@@ -16,13 +15,13 @@ cd dotfiles && ./install.sh
 
 You can download font [here](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/SourceCodePro/Regular/complete), or it will looks wierd.
 
-## Installed softwares
+## Installed software
 
 You don't need to download them, they are all in script.
 
 ### vim
 
-[Fisa vim](https://github.com/fisadev/fisa-vim-config) config
+[Fisa vim](https://github.com/fisadev/fisa-vim-config)
 
 ### tmux
 
@@ -30,5 +29,4 @@ You don't need to download them, they are all in script.
 
 ### zsh
 
-[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
-[powerlevel9k](https://github.com/bhilburn/powerlevel9k) and some little change
+[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) with [powerlevel9k theme](https://github.com/bhilburn/powerlevel9k) and some little customized
