@@ -1,0 +1,10 @@
+[user]
+	name = 秉虎
+	email = s96016641@gmail.com
+[color]
+	ui = true
+[commit]
+	gpgsign = true
+[core]
+	editor = vim
+	autocrlf = input

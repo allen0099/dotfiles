@@ -9,6 +9,7 @@ source ./check_distribution.sh
 
 # Needed software list
 target_software=(git zsh vim tmux)
+configs=(.bashrc .gitconfig)
 vim_require=(git curl python3-pip exuberant-ctags ack-grep)
 zsh_require=(autojump)
 
@@ -122,6 +123,10 @@ for software in "${target_software[@]}"; do
     check_software "$software"
 done
 
+for software in "${configs[@]}"; do
+    ln_conf "$software"
+done
+
 # Check vim and install require
 if [ -x "$(command -v vim)" ]; then
     echo "[INFO] Install vim require..."
@@ -186,6 +191,12 @@ if [ "$distribution" == "Ubuntu" ]; then
         esac
     fi
 fi
+
+# If you have faced some QT error, can't input Chewing or other CJK
+# uncomment code below may help you
+#echo "GTK_IM_MODULE=ibus" >> ~/.pam_environment
+#echo "QT_IM_MODULE=ibus" >> ~/.pam_environment
+#echo "XMODIFIERS=@im=ibus" >> ~/.pam_environment
 
 ## Switch to zsh
 #echo "Change default shell to zsh"
