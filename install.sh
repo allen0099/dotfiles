@@ -28,7 +28,7 @@ function initial() {
         current_user=$SUDO_USER
         home_directory="/home/$SUDO_USER"
     else
-        echo "[ERROR] Your distribution haven't been support yet. exit.."
+        echo "[ERROR] Your distribution haven't been support yet. Exit."
         exit 1
     fi
     echo "[DEBUG] USER=$USER"
@@ -37,9 +37,17 @@ function initial() {
     echo "[DEBUG] permission=$permission"
     echo "[DEBUG] current_user=$current_user"
     echo "[DEBUG] home_directory=$home_directory"
+    echo "[INFO] update git submodule..."
+    git submodule update --init --recursive
+    if [ "$HOME" != "$home_directory" ]; then
+        HOME=$home_directory
+        echo "[DEBUG] home fixed!"
+        echo "[DEBUG] HOME=$HOME"
+        echo "[DEBUG] home_directory=$home_directory"
+    fi
     # permission check
     if [ "$permission" != "root" ]; then
-        echo "[ERROR] You need to be sudo..., exit."
+        echo "[ERROR] You need to be sudo...! Exit."
         exit 1
     fi
 }
@@ -64,7 +72,7 @@ function check_software() {
             if [ -x "$(command -v "$1")" ]; then
                 echo "[INFO] Done!"
             else
-                echo "[INFO] $1 is not installed. installing..."
+                echo "[INFO] $1 is not installed. Installing..."
                 if [ "$distribution" == "Ubuntu" ]; then
                     apt install -y "$1"
                 elif [ "$distribution" == "CentOS Linux" ]; then
@@ -103,7 +111,7 @@ if [ -x "$(command -v vim)" ]; then
     for software in "${vim_require[@]}"; do
         check_software "$software"
     done
-    echo "[INFO] pip3 install!"
+    echo "[INFO] pip3 requirements installing..."
     pip3 install pep8 flake8 pyflakes isort yapf
     ln_conf .vimrc
     vim +qall
