@@ -37,18 +37,18 @@ function initial() {
     echo "[DEBUG] permission=$permission"
     echo "[DEBUG] current_user=$current_user"
     echo "[DEBUG] home_directory=$home_directory"
-    echo "[INFO] update git submodule..."
-    git submodule update --init --recursive
-    if [ "$HOME" != "$home_directory" ]; then
-        HOME=$home_directory
-        echo "[DEBUG] home fixed!"
-        echo "[DEBUG] HOME=$HOME"
-        echo "[DEBUG] home_directory=$home_directory"
-    fi
     # permission check
     if [ "$permission" != "root" ]; then
         echo "[ERROR] You need to be sudo...! Exit."
         exit 1
+    fi
+    echo "[INFO] update git submodule..."
+    git submodule update --init --recursive
+    if [ "$HOME" != "$home_directory" ]; then
+        HOME=$home_directory
+        echo "[INFO] home fixed!"
+        echo "[DEBUG] HOME=$HOME"
+        echo "[DEBUG] home_directory=$home_directory"
     fi
 }
 
@@ -58,7 +58,7 @@ function ln_conf() {
         echo "[WARNING] File conflict: $dst already existed!"
     else
         src="$SCRIPTPATH/$1"
-        echo "  Link $src to $dst"
+        echo "[INFO]   Link $src to $dst"
         ln -s "$src" "$dst"
         chown -h "$current_user":"$current_user" "$dst"
     fi
@@ -111,8 +111,8 @@ if [ -x "$(command -v vim)" ]; then
     for software in "${vim_require[@]}"; do
         check_software "$software"
     done
-    echo "[INFO] pip3 requirements installing..."
-    pip3 install pep8 flake8 pyflakes isort yapf
+    echo "[INFO] fisa-vim requirements installing..."
+    pip3 install pynvim flake8 pylint isort
     ln_conf .vimrc
     vim +qall
 else
@@ -130,16 +130,18 @@ fi
 
 # Check zsh and install require
 if [ -x "$(command -v zsh)" ]; then
-    echo "[INFO] Install oh-my-zsh configuration..."
+    echo "[INFO] Install oh-my-zsh plugins require..."
     for software in "${zsh_require[@]}"; do
         check_software "$software"
     done
-    # Install oh-my-zsh
+    echo "[INFO] Install oh-my-zsh..."
     ./oh-my-zsh/tools/install.sh
-    # Install theme
+    echo "[INFO] Install oh-my-zsh theme..."
     git clone https://github.com/bhilburn/powerlevel9k.git $home_directory/.oh-my-zsh/custom/themes/powerlevel9k
+    echo "[INFO] Install oh-my-zsh plugins..."
     git clone https://github.com/zsh-users/zsh-autosuggestions $home_directory/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-syntax-highlighting $home_directory/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    echo "[INFO] Setting up the zsh config..."
     sed -i "17s:\$USER:$current_user:" .zshrc
     sed -i "26s:\$HOME:$home_directory:" .zshrc
     ln_conf .zshrc
