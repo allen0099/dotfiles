@@ -4,11 +4,11 @@
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
-# Checking distro
+# Checking distribution
 source ./check_distribution.sh
 
-# Needed softwares
-softwares=(git zsh vim tmux)
+# Needed software list
+target_software=(git zsh vim tmux)
 vim_require=(git curl python3-pip exuberant-ctags ack-grep)
 zsh_require=(autojump)
 
@@ -56,9 +56,26 @@ function ln_conf() {
     dst="$home_directory/$1"
     if [ -f "$dst" ] || [ -d "$dst" ]; then
         echo "[WARNING] File conflict: $dst already existed!"
+        read -rp "[WARNING] move conflict to $dst.bak (y/N)?" choice
+        case "$choice" in
+            y|Y )
+                echo "[INFO] Moving file..."
+                mv "$dst" "$dst.bak"
+                src="$SCRIPTPATH/$1"
+                echo "[INFO] Link $src to $dst"
+                ln -s "$src" "$dst"
+                chown -h "$current_user":"$current_user" "$dst"
+                ;;
+            n|N )
+                echo "[INFO] Do nothing! Not link the file!"
+                ;;
+            * )
+                echo "[ERROR] Invalid options, disrupted"
+                ;;
+        esac
     else
         src="$SCRIPTPATH/$1"
-        echo "[INFO]   Link $src to $dst"
+        echo "[INFO] Link $src to $dst"
         ln -s "$src" "$dst"
         chown -h "$current_user":"$current_user" "$dst"
     fi
@@ -101,7 +118,7 @@ echo "[INFO] "
 initial
 
 # Check and install software
-for software in "${softwares[@]}"; do
+for software in "${target_software[@]}"; do
     check_software "$software"
 done
 
@@ -115,6 +132,12 @@ if [ -x "$(command -v vim)" ]; then
     pip3 install pynvim flake8 pylint isort
     ln_conf .vimrc
     vim +qall
+
+    echo "[INFO] Changing permission to $current_user"
+    chown -R "$current_user":"$current_user" "$HOME/.vim"
+    chown -R "$current_user":"$current_user" "$HOME/.fzf"
+    chown -R "$current_user":"$current_user" "$HOME/.fzf.bash"
+    chown -R "$current_user":"$current_user" "$HOME/.fzf.zsh"
 else
     echo "[ERROR] Vim is not installed. Aborting..."
 fi
@@ -137,14 +160,17 @@ if [ -x "$(command -v zsh)" ]; then
     echo "[INFO] Install oh-my-zsh..."
     ./oh-my-zsh/tools/install.sh
     echo "[INFO] Install oh-my-zsh theme..."
-    git clone https://github.com/bhilburn/powerlevel9k.git $home_directory/.oh-my-zsh/custom/themes/powerlevel9k
+    git clone https://github.com/bhilburn/powerlevel9k.git "$home_directory/.oh-my-zsh/custom/themes/powerlevel9k"
     echo "[INFO] Install oh-my-zsh plugins..."
-    git clone https://github.com/zsh-users/zsh-autosuggestions $home_directory/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting $home_directory/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-autosuggestions "$home_directory/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting "$home_directory/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     echo "[INFO] Setting up the zsh config..."
     sed -i "17s:\$USER:$current_user:" .zshrc
     sed -i "26s:\$HOME:$home_directory:" .zshrc
     ln_conf .zshrc
+
+    echo "[INFO] Changing permission to $current_user"
+    chown -R "$current_user":"$current_user" "$HOME/.oh-my-zsh"
 else
     echo "[ERROR] Zsh is not installed. Aborting..."
 fi
