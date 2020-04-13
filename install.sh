@@ -31,6 +31,12 @@ function initial() {
         echo "[ERROR] Your distribution haven't been support yet. exit.."
         exit 1
     fi
+    echo "[DEBUG] USER=$USER"
+    echo "[DEBUG] SUDO_USER=$SUDO_USER"
+    echo "[DEBUG] HOME=$HOME"
+    echo "[DEBUG] permission=$permission"
+    echo "[DEBUG] current_user=$current_user"
+    echo "[DEBUG] home_directory=$home_directory"
     # permission check
     if [ "$permission" != "root" ]; then
         echo "[ERROR] You need to be sudo..., exit."
@@ -51,14 +57,14 @@ function ln_conf() {
 }
 
 function check_software() {
-    read -rp "Install $1... (y/N)?" choice
+    read -rp "[INFO] Install $1... (y/N)?" choice
     case "$choice" in
         y|Y )
-            echo "Checking $1..."
+            echo "[INFO] Checking $1..."
             if [ -x "$(command -v "$1")" ]; then
-                echo "Done!"
+                echo "[INFO] Done!"
             else
-                echo "$1 is not installed. installing..."
+                echo "[INFO] $1 is not installed. installing..."
                 if [ "$distribution" == "Ubuntu" ]; then
                     apt install -y "$1"
                 elif [ "$distribution" == "CentOS Linux" ]; then
@@ -67,22 +73,22 @@ function check_software() {
             fi
             ;;
         n|N )
-            echo "Don't install $1"
+            echo "[INFO] Don't install $1"
             ;;
         * )
-            echo "Invalid options, disrupted"
+            echo "[ERROR] Invalid options, disrupted"
             ;;
     esac
 }
 
-echo ""
-echo "  +------------------------------------------------+"
-echo "  |                                                |\\"
-echo "  |       allen0099's dotfile install script       | \\"
-echo "  |                                                | |"
-echo "  +------------------------------------------------+ |"
-echo "   \\______________________________________________\\|"
-echo ""
+echo "[INFO] "
+echo "[INFO]   +------------------------------------------------+"
+echo "[INFO]   |                                                |\\"
+echo "[INFO]   |       allen0099's dotfile install script       | \\"
+echo "[INFO]   |                                                | |"
+echo "[INFO]   +------------------------------------------------+ |"
+echo "[INFO]    \\______________________________________________\\|"
+echo "[INFO] "
 
 initial
 
@@ -93,29 +99,30 @@ done
 
 # Check vim and install require
 if [ -x "$(command -v vim)" ]; then
-    echo "Install vim require..."
+    echo "[INFO] Install vim require..."
     for software in "${vim_require[@]}"; do
         check_software "$software"
     done
+    echo "[INFO] pip3 install!"
     pip3 install pep8 flake8 pyflakes isort yapf
     ln_conf .vimrc
     vim +qall
 else
-    echo "Vim is not installed. Aborting..."
+    echo "[ERROR] Vim is not installed. Aborting..."
 fi
 
 # Check tmux and install require
 if [ -x "$(command -v tmux)" ]; then
-    echo "Install tmux configuration..."
+    echo "[INFO] Install tmux configuration..."
     ln_conf .tmux.conf
     ln_conf .tmux.conf.local
 else
-    echo "Tmux is not installed. Aborting..."
+    echo "[ERROR] Tmux is not installed. Aborting..."
 fi
 
 # Check zsh and install require
 if [ -x "$(command -v zsh)" ]; then
-    echo "Install oh-my-zsh configuration..."
+    echo "[INFO] Install oh-my-zsh configuration..."
     for software in "${zsh_require[@]}"; do
         check_software "$software"
     done
@@ -129,13 +136,13 @@ if [ -x "$(command -v zsh)" ]; then
     sed -i "26s:\$HOME:$home_directory:" .zshrc
     ln_conf .zshrc
 else
-    echo "Zsh is not installed. Aborting..."
+    echo "[ERROR] Zsh is not installed. Aborting..."
 fi
 
 # Force Android emulator use system libs
 if [ "$distribution" == "Ubuntu" ]; then
     if [ -f ~/.pam_environment ]; then
-        read -rp "Force Android emulator use system libs (y/N)?" choice
+        read -rp "[INFO] Force Android emulator use system libs (y/N)?" choice
         case "$choice" in
             y|Y ) echo "ANDROID_EMULATOR_USE_SYSTEM_LIBS=1" >> ~/.pam_environment;;
             n|N ) echo "Don't add environment";;
