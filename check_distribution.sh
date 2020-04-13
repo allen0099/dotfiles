@@ -30,6 +30,3 @@ else
     distribution=$(uname -s)
     distribution_version=$(uname -r)
 fi
-
-#echo $distribution
-#echo $distribution_version
