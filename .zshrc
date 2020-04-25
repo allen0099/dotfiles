@@ -1,5 +1,5 @@
 # 自定義
-alias df="df --exclude-type=squashfs"
+alias df="df --exclude-type=squashfs --exclude-type=tmpfs"
 
 # 令 gpgsign 在 JetBrains IDEs 能正常運行
 export GPG_TTY=$(tty)
