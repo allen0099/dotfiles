@@ -165,13 +165,13 @@ if [ -x "$(command -v zsh)" ]; then
     echo "[INFO] Install oh-my-zsh..."
     ./oh-my-zsh/tools/install.sh
     echo "[INFO] Install oh-my-zsh theme..."
-    git clone https://github.com/bhilburn/powerlevel9k.git "$home_directory/.oh-my-zsh/custom/themes/powerlevel9k"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"/themes/powerlevel10k
     echo "[INFO] Install oh-my-zsh plugins..."
     git clone https://github.com/zsh-users/zsh-autosuggestions "$home_directory/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting "$home_directory/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     echo "[INFO] Setting up the zsh config..."
-    sed -i "17s:\$USER:$current_user:" .zshrc
-    sed -i "26s:\$HOME:$home_directory:" .zshrc
+    sed -i "22s:\$HOME:$home_directory:" .zshrc
+    ln_conf .p10k.zsh
     ln_conf .zshrc
 
     echo "[INFO] Changing permission to $current_user"
