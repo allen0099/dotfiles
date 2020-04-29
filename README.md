@@ -7,8 +7,8 @@ allen0099's dotfile installer
 ## Usage
 
 ```shell script
-git clone https://github.com/allen0099/dotfiles
-cd dotfiles && ./install.sh
+git clone git@github.com:allen0099/dotfiles .dotfiles
+cd ~/.dotfiles && ./install.sh
 ```
 
 ### font
