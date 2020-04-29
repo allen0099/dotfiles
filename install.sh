@@ -170,7 +170,7 @@ if [ -x "$(command -v zsh)" ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions "$home_directory/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting "$home_directory/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     echo "[INFO] Setting up the zsh config..."
-    sed -i "22s:\$HOME:$home_directory:" .zshrc
+    # sed -i "22s:\$HOME:$home_directory:" .zshrc
     ln_conf .p10k.zsh
     ln_conf .zshrc
 
