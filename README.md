@@ -29,4 +29,10 @@ You don't need to download them, they are all in script.
 
 ### zsh
 
-[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) with [powerlevel9k theme](https://github.com/bhilburn/powerlevel9k) and some little customized
+[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) with [powerlevel10k theme](https://github.com/romkatv/powerlevel10k) and some little customized
+
+### powerlevel10k customize
+
+```shell script
+p10k configure
+```
