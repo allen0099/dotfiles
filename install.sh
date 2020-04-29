@@ -165,7 +165,7 @@ if [ -x "$(command -v zsh)" ]; then
     echo "[INFO] Install oh-my-zsh..."
     ./oh-my-zsh/tools/install.sh
     echo "[INFO] Install oh-my-zsh theme..."
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"/themes/powerlevel10k
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$home_directory/.oh-my-zsh/custom/themes/powerlevel10k"
     echo "[INFO] Install oh-my-zsh plugins..."
     git clone https://github.com/zsh-users/zsh-autosuggestions "$home_directory/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting "$home_directory/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
