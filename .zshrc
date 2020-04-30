@@ -89,6 +89,7 @@ plugins=(
   autojump
   docker
   docker-compose
+  extract
   fzf
   git
   httpie
@@ -97,6 +98,7 @@ plugins=(
   sudo
   ufw
   zsh-autosuggestions
+  zsh-completions
   zsh-syntax-highlighting
 )
 
