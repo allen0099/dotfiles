@@ -93,6 +93,7 @@ function install_zsh() {
   echo "[INFO] Installing ohmyzsh plugins..."
   chk_sfw autojump
   git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  git clone https://github.com/zsh-users/zsh-completions "$HOME/.oh-my-zsh/custom/plugins/zsh-completions"
   git clone https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
   chk_ln .p10k.zsh
   chk_ln .zshrc
