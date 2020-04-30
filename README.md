@@ -7,7 +7,7 @@ allen0099's dotfile installer
 ## Usage
 
 ```shell script
-git clone git@github.com:allen0099/dotfiles .dotfiles
+git clone https://github.com/allen0099/dotfiles .dotfiles
 cd ~/.dotfiles && ./install.sh
 ```
 
