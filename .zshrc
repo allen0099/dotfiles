@@ -130,6 +130,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+vt=$(basename "/"$(ps -f -p $(cat /proc/$(echo $$)/stat | cut -d \  -f 4) | tail -1 | sed 's/^.* //'))
+if [ "$vt" = "gnome-terminal-server" ]; then
+  # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+elif [ "$vt" = "com.intellij.idea.Main" ]; then
+  [[ ! -f ~/.jetbrains.zsh ]] || source ~/.jetbrains.zsh
+fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

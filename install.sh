@@ -97,6 +97,7 @@ function install_zsh() {
   git clone https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
   chk_ln .p10k.zsh
   chk_ln .zshrc
+  chk_ln .jetbrains.zsh
 }
 
 function other() {
