@@ -92,7 +92,9 @@ plugins=(
   extract
   fzf
   git
+  helm
   httpie
+  kubectl
   pip
   pipenv
   sudo
